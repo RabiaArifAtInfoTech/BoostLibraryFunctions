@@ -6,8 +6,10 @@
 #include <boost/algorithm/string.hpp>
 #include<string>
 #include <boost/algorithm/cxx11/none_of.hpp> //for none_of_equal
-#include <boost/algorithm/cxx11/one_of.hpp> //for one_of_equal
+#include <boost/algorithm/cxx11/one_of.hpp> // for one_of_equal
 #include <boost/algorithm/cxx11/all_of.hpp> // for all_of  & all_of_equal
+#include <boost/algorithm/cxx11/any_of.hpp> // for any_of_equal
+#include <boost/algorithm/cxx11/is_sorted.hpp>
 
 boost::multiprecision::int128_t boost_product(long long A, long long B)
 {
@@ -317,7 +319,7 @@ int main()
 
 	// Condition to check
 	if (ans == 1)
-		std::cout << "\nALl elements are odd in c[1,1,1,1,1]";
+		std::cout << "\nAll elements are odd in c[1,1,1,1,1]";
 	else
 		std::cout << "\nAll elements are not odd in c[1,1,1,1,1]";
 
@@ -326,11 +328,11 @@ int main()
 
 	// Condition to check
 	if (ans == 1)
-		std::cout << "\nALl elements are odd in c1[] = { 1, 2, 3, 1 }";
+		std::cout << "\nAll elements are odd in c1[] = { 1, 2, 3, 1 }";
 	else
 		std::cout << "\nAll elements are not odd in c1[] = { 1, 2, 3, 1 }";
 
-	int c2[] = { 1, 2, 3, 6, 5 };
+	int c2[] = { 1, 2, 3, 6, 6 };
 	//int c2[] = { 1, 2, 3, 7, 6 };
 
 
@@ -338,11 +340,59 @@ int main()
 
 	// Condition to check
 	if (ans == 1)
-		std::cout << "\nALl elements in c1 are less than 7";
+		std::cout << "\nAll elements in c1 are less than 7";
 	else
 		std::cout << "\nAll elements in c1 are not less than 7";
 
 
+	/////........21. boost::algorithm::all_of_equal 
+	std::cout << "\n\n\n....21. boost::algorithm::all_of_equal()....\n";
+
+	ans = boost::algorithm::all_of_equal(c, 1);
+
+	// Condition to check
+	if (ans == 1)
+		std::cout << "All elements are 1";
+	else
+		std::cout << "All elements are not 1";
+
+
+	/////........22. boost::algorithm::one_of :: exactly one of the element share the property given
+	std::cout << "\n\n\n....22. boost::algorithm::one_of()....\n";
+
+	ans = boost::algorithm::one_of(c, isOdd);
+
+	// Condition to check
+	if (ans == 1)
+		std::cout << "Exactly one element is odd";
+	else
+		std::cout << "Exactly one element is not odd";
+	
+	
+	/////........23. boost::algorithm::any_of_equal ::  returns true if the any of the elements are same in the sequence to the value passed.
+	std::cout << "\n\n\n....23. boost::algorithm::any_of_equal()....\n";
+
+	//ans = boost::algorithm::any_of_equal(c1, 1);
+	ans = boost::algorithm::any_of_equal(c1, 4);
+
+	// Condition to check
+	if (ans == 1)
+		std::cout << "at least one elements is 4";
+	else
+		std::cout << "not any elements is 4";
+	
+	/////........24. boost::algorithm::is_sorted
+	std::cout << "\n\n\n....24. boost::algorithm::is_sorted()....\n";
+
+	//ans = boost::algorithm::is_sorted(c1);
+	ans = boost::algorithm::is_sorted(c2);
+
+	// Condition to check
+	if (ans == 1)
+		std::cout << "c2 is sorted";
+	else
+		std::cout << "c2 is not sorted";
+	
 
 
 
