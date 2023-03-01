@@ -5,7 +5,9 @@
 #include <boost/multiprecision/cpp_dec_float.hpp>
 #include <boost/algorithm/string.hpp>
 #include<string>
-
+#include <boost/algorithm/cxx11/none_of.hpp> //for none_of_equal
+#include <boost/algorithm/cxx11/one_of.hpp> //for one_of_equal
+#include <boost/algorithm/cxx11/all_of.hpp> // for all_of  & all_of_equal
 
 boost::multiprecision::int128_t boost_product(long long A, long long B)
 {
@@ -28,6 +30,46 @@ template <typename T> inline T area_of_a_circle(T r)
 	using boost::math::constants::pi;
 	return pi<T>() * r * r;
 }
+
+// function to generate first n
+// fibonacci numbers
+void fib(unsigned int n)
+{
+	// seed values
+	// 0th and 1st number of the
+	// series are 0 and 1
+	boost::multiprecision::cpp_int a = 0;
+	boost::multiprecision::cpp_int b = 1;
+	std::cout << a << "  ";
+	std::cout << b << "  ";
+
+	for (unsigned int i = 2; i < n; ++i)
+	{
+		const boost::multiprecision::cpp_int c = a + b;
+		std::cout << c << "  ";
+		a = b;
+		b = c;
+	}
+}
+
+boost::multiprecision::cpp_int Factorial(int number)
+{
+	boost::multiprecision::cpp_int num = 1;
+	for (int i = 1; i <= number; i++)
+		num = num * i;
+	return num;
+}
+
+bool isOdd(int i)
+{
+	return i % 2 == 1;
+}
+
+bool allLessThanSeven(int i)
+{
+	return i < 7;
+}
+
 
 int main()
 {
@@ -68,7 +110,7 @@ int main()
 	// numeric_limits::digits10 represent the number
 	// of decimal digits that can be held of particular
 	// data type without any loss.  
-	///it is function of std
+	////it is a function of std
 
 	// Area by using float data type
 	std::cout << "Float: "
@@ -87,7 +129,7 @@ int main()
 		<< area_mp << std::endl;
 
 	////.................Boost String Algorithms Library
-	std::cout << "\n\n........ Boost String Algorithms Library .....";
+	std::cout << "\n\n\n........... Boost String Algorithms Library .........";
 
 	////.................4. to_upper() 
 	std::cout << "\n\n4. boost::algorithm::to_upper() \n";
@@ -100,14 +142,14 @@ int main()
 		<< str << std::endl;
 
 	boost::algorithm::to_upper(str);
-	std::cout << "Actual string converted to uppercase: "
+	std::cout << "String converted to uppercase: "
 		<< str << std::endl;
 	
 	////.................5. to_lower() 
 	std::cout << "\n\n5. boost::algorithm::to_lower() \n";
 
 	boost::algorithm::to_lower(str);
-	std::cout << "Actual string converted to lowercase: "
+	std::cout << "String converted to lowercase: "
 		<< str << std::endl;
 
 	////.................6. to_upper_copy() 
@@ -120,6 +162,9 @@ int main()
 	std::cout << "Converted Uppercase string: "
 		<< upper_s << std::endl;
 
+	std::cout << "\nActual string: "
+		<< str << std::endl;
+
 	////.................7. to_lower() 
 	std::cout << "\n\n7. boost::algorithm::to_lower_copy() \n";
 
@@ -127,40 +172,181 @@ int main()
 
 	std::cout << "Converted Lowercase string: "
 		<< lower_s << std::endl;
+	
+
+
 
 	////.................To remove characters from a string.........
-	std::cout << "\n\nTo remove characters from a string \n";
-
-	////.................8. erase_first_copy
-	std::cout << "\n\n8. erase_first_copy of \"g\" \n";
+	std::cout << "\n\n.......To remove character(s) from a string........ \n";
 
 	std::string s = "geeksforgeeks";
+
+	std::cout << "\nActual string: "
+		<< s << std::endl;
+
+	////.................8. erase_first_copy
+	std::cout << "\n8. erase_first_copy of \"g\" : ";
+
 	std::cout << boost::algorithm::erase_first_copy(s, "g") << '\n';
 
 	////.................9. erase_nth_copy
-	std::cout << "\n\n9. erase_nth_copy\n";
+	std::cout << "\n\n9. erase_nth_copy of \"g\" : ";
 
 	std::cout << boost::algorithm::erase_nth_copy(s, "g", 0) << '\n';
 	
+	std::cout << "\nActual string : "
+		<< s << " (untouched) " << std::endl;
+
 	////.................10. erase_last_copy
-	std::cout << "\n\n10. erase_last_copy\n";
+	std::cout << "\n\n10. erase_last_copy of \"g\" : \n";
 
 	std::cout << boost::algorithm::erase_last_copy(s, "g") << '\n';
 
 	////.................11. erase_all_copy
-	std::cout << "\n\n11. erase_all_copy\n";
+	std::cout << "\n\n11. erase_all_copy of \"g\" : \n";
 
 	std::cout << boost::algorithm::erase_all_copy(s, "g") << '\n';
 
 	////.................12. erase_head_copy
-	std::cout << "\n\n12. erase_head_copy\n";
+	std::cout << "\n\n12. erase_head_copy  (actual string not changed) \n";
 
 	std::cout << boost::algorithm::erase_head_copy(s, 5) << '\n';
+
+	std::cout << "\nActual string : "
+		<< s << " (untouched) " << std::endl;
 
 	////.................13. erase_tail_copy
 	std::cout << "\n\n13. erase_tail_copy\n";
 
-	std::cout << boost::algorithm::erase_tail_copy(s, 1) << '\n';
+	std::cout << boost::algorithm::erase_tail_copy(s, 3) << '\n';
+
+
+
+
+	////To replace characters from a string
+	////Boost.StringAlgorithms provides several functions you can use to replace individual characters from a string.
+
+	std::cout << "\n\n.......To replace characters from a string .....\n";
+
+
+	std::string str1 = "geeks_for_geeks";
+
+	std::cout << "\nActual string : "
+		<< str1;
+
+	////.................14. replace_first_copy
+	std::cout << "\n\n14. replace_first_copy of \"_\" with \"-\" \n";
+
+	std::cout
+		<< boost::replace_first_copy(str1, "_", "-")
+		<< '\n';
+	
+	////.................15. replace_last_copy
+	std::cout << "\n\n15. replace_last_copy of \"_\" with \"-\" \n";
+	std::cout
+		<< boost::replace_last_copy(str1, "_", "-")
+		<< '\n';
+	
+	////.................16. replace_all_copy
+	std::cout << "\n\n16. replace_all_copy of \"_\" with \"-\" \n";
+	std::cout
+		<< boost::replace_all_copy(str1, "_", "-")
+		<< '\n';
+
+
+	////.................16. Generating large Fibonacci numbers using boost library
+	std::cout << "\n\n.........16. Generating large Fibonacci numbers using boost library.........\n";
+
+
+	unsigned int n = 40;
+
+	// function calling
+	fib(n);
+
+	////.........17. Factorial of Large Number Using boost multiprecision Library
+	std::cout << "\n\n\n.........17. Factorial of Large Number Using boost multiprecision Library.......\n";
+
+	int number = 50;
+	boost::multiprecision::cpp_int fact = Factorial(number);
+	std::cout << fact << std::endl;
+
+
+	/////........18. boost::algorithm::none_of_equal
+	std::cout << "\n\n\n....18. boost::algorithm::none_of_equal()....\n";
+
+	std::vector<int> c(5, 1);
+	std::cout << "c [1, 1, 1, 1, 1]\n";
+
+	// Run the function
+	bool ans
+		= boost::algorithm::none_of_equal(c, 1);
+
+	// Condition to check
+	if (ans == 1)
+		std::cout << "all not equal to 1";
+	else
+		std::cout << "all equals to 1";
+
+
+	/////........19. boost::algorithm::one_of_equal
+	std::cout << "\n\n\n....19. boost::algorithm::one_of_equal()....\n";
+
+	int c1[] = { 1, 2, 3, 1 };
+	bool ans1 = boost::algorithm::one_of_equal(c1, 1);
+
+	// Condition to check
+	if (ans1 == 1)
+		std::cout << "exactly one element is 1";
+	else
+		std::cout << "exactly one element is not 1";
+
+	 ans1 = boost::algorithm::one_of_equal(c1, c1 + 2, 1);
+
+	// Condition to check
+	if (ans1 == 1)
+		std::cout << "\n\nexactly one element is 1";
+	else
+		std::cout << "\nexactly one element is not 1";
+
+
+	/////........20. boost::algorithm::all_of
+	std::cout << "\n\n\n....20. boost::algorithm::all_of()....\n";
+
+
+	ans = boost::algorithm::all_of(c, isOdd);
+
+	// Condition to check
+	if (ans == 1)
+		std::cout << "\nALl elements are odd in c[1,1,1,1,1]";
+	else
+		std::cout << "\nAll elements are not odd in c[1,1,1,1,1]";
+
+	ans = boost::algorithm::all_of(c1, isOdd);
+	//ans = boost::algorithm::all_of(c1, c1 + 1, isOdd);
+
+	// Condition to check
+	if (ans == 1)
+		std::cout << "\nALl elements are odd in c1[] = { 1, 2, 3, 1 }";
+	else
+		std::cout << "\nAll elements are not odd in c1[] = { 1, 2, 3, 1 }";
+
+	int c2[] = { 1, 2, 3, 6, 5 };
+	//int c2[] = { 1, 2, 3, 7, 6 };
+
+
+	ans = boost::algorithm::all_of(c2, c2 + 4, allLessThanSeven);
+
+	// Condition to check
+	if (ans == 1)
+		std::cout << "\nALl elements in c1 are less than 7";
+	else
+		std::cout << "\nAll elements in c1 are not less than 7";
+
+
+
+
+
+
 
 	std::cout << "\n\n";
 
