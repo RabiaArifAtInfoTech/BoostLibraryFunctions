@@ -10,6 +10,10 @@
 #include <boost/algorithm/cxx11/all_of.hpp> // for all_of  & all_of_equal
 #include <boost/algorithm/cxx11/any_of.hpp> // for any_of_equal
 #include <boost/algorithm/cxx11/is_sorted.hpp>
+// Boost.Lexical_Cast in C++
+#include "boost/lexical_cast.hpp"
+#include<array>
+#include <typeinfo>
 
 boost::multiprecision::int128_t boost_product(long long A, long long B)
 {
@@ -395,6 +399,24 @@ int main()
 	
 
 
+
+
+	////.................25. Boost.Lexical_Cast ................
+	std::cout << "\n\n\n\n...................25.  Boost.Lexical_Cast ...............\n";
+
+	// integer to string conversion
+	int s12 = 23;
+	std::string s123 = boost::lexical_cast<std::string>(s12);
+	std::cout << s123 << std::endl << typeid(s123).name() << "\n";
+
+	// integer to char conversion
+	int int1 = 45;
+	std::array<char, 64> msg = boost::lexical_cast<std::array<char, 64>>(int1);
+	std::cout << msg[0] << " " << msg[1] << std::endl << typeid(msg).name() << "\n";
+
+	// string to integer conversion in integer value
+	int num123 = boost::lexical_cast<int>("1234");
+	std::cout << num123 << std::endl << typeid(num123).name() << "\n";
 
 
 
